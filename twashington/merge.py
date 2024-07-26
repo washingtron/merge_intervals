@@ -4,24 +4,12 @@
 """
 
 
-def intervals_intersect(x, y):
-    if x is None or y is None:
-        return False
-    return not (x[1] < y[0] or y[1] < x[0])
-
-
-def merge_two_intervals(x, y):
-    return [min(x[0], y[0]), max(x[1], y[1])]
-
-
 def merge_interval_list(intervals):
     ins = intervals.copy()
-    size = len(ins)
-
-    for a in range(size):
-        for b in range(a + 1, size):
-            if intervals_intersect(ins[a], ins[b]):
-                ins[a] = merge_two_intervals(ins[a], ins[b])
+    for a in range(len(ins)):
+        for b in range(a + 1, len(ins)):
+            if not (ins[a] is None or ins[b] is None) and not (ins[a][1] < ins[b][0] or ins[b][1] < ins[a][0]):
+                ins[a] = [min(ins[a][0], ins[b][0]), max(ins[a][1], ins[b][1])]
                 ins[b] = None
     return [c for c in ins if c is not None]
 
