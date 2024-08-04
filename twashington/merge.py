@@ -3,6 +3,7 @@
     Merge Intervals
     Do not score this. Score the julia program.
 """
+import time
 
 
 def merge_interval_list(intervals):
@@ -10,39 +11,34 @@ def merge_interval_list(intervals):
     for a in range(len(ins)):
         for b in range(a + 1, len(ins)):
             if not (ins[a] is None or ins[b] is None) and not (ins[a][1] < ins[b][0] or ins[b][1] < ins[a][0]):
-                ins[a] = [min(ins[a][0], ins[b][0]), max(ins[a][1], ins[b][1])]
-                ins[b] = None
+                ins[b] = [min(ins[a][0], ins[b][0]), max(ins[a][1], ins[b][1])]
+                ins[a] = None
+    # time.sleep(0.1)
     return [c for c in ins if c is not None]
 
 
-def get_input_list():
-    ins = [[[1, 3], [2, 6], [8, 10], [15, 18]]]
-    ins.append([[1, 4], [4, 5]])
-    ins.append([[-1000, 1000]])
-    ins.append([[2, 6], [1, 3], [8, 10], [15, 18]])
-    ins.append([[1, 4], [0, 0]])
-    ins.append([[1, 4], [2, 3]])
-    ins.append([[1, 4], [0, 2], [3, 5]])
-    ins.append([[5, 6], [1, 2], [2, 4], [7, 9]])
-    ins.append([[-1, 1], [-2, 2], [-3, 3]])
-    ins.append([[1, 10], [2, 6], [8, 10], [15, 18]])
-    ins.append([[5, 6], [5, 5], [6, 6]])
-    ins.append([[1, 2], [2, 3], [3, 4], [4, 5]])
-    ins.append([[1, 3], [4, 6], [7, 9], [10, 12]])
-    ins.append([[10, 20], [15, 25], [5, 15], [0, 5]])
-    ins.append([[1, 5], [2, 6], [8, 10], [9, 12]])
-    ins.append([[1, 4], [0, 5], [5, 10]])
-    ins.append([[-10, -5], [-6, 0], [1, 2], [2, 3]])
-    ins.append([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]])
+def get_input_list(filename):
+    intervals_list = []
 
-    return ins
+    with open(filename, 'r') as file:
+        for line in file:
+            # Strip whitespace and newlines, and evaluate the string as a Python expression
+            stripped_line = line.strip()
+            if stripped_line:  # Check if line is not empty
+                intervals = eval(stripped_line)
+                intervals_list.append(intervals)
+
+    return intervals_list
 
 
 def main():
-    input_list_list = get_input_list()
+    input_list_list = get_input_list("intervals.txt")
     for input_list in input_list_list:
+        start = time.perf_counter_ns()
         output_list = sorted(merge_interval_list(input_list), key=lambda x: x[0])
+        end = time.perf_counter_ns()
         print(f"Input: {input_list}, output: {output_list}")
+        print(f"Time taken: {(end - start):.4f} ns")
 
 
 if __name__ == "__main__":
