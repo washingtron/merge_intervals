@@ -1,0 +1,79 @@
+#=
+  T Washington
+  Merged Intervals Julia
+=#
+
+using JSON
+# Note -- requires running this in Julia:
+#   import Pkg; Pkg.add("JSON")
+
+debug = false
+
+function get_intervals(filename::String)::Vector{Vector{Vector{Int}}}
+    intervals_list = Vector{Vector{Vector{Int}}}()
+    open(filename, "r") do file
+        for line in eachline(file)
+            # Parse the line as a JSON object to get the list of intervals
+            intervals = JSON.parse(line)
+            push!(intervals_list, intervals)
+        end
+    end
+    return intervals_list
+end
+
+function intervals_intersect(a::Vector{Int}, b::Vector{Int})::Bool
+    if a == [] || b == []
+        return false
+    else
+        return !( a[2] < b[1] || b[2] < a[1])
+    end
+end
+# warm up
+intervals_intersect([1,2],[0,1])
+
+
+function merge_these_two_intervals(a::Vector{Int}, b::Vector{Int})::Vector{Int}
+    if a[1] < b[1]
+        return [a[1], b[2]]
+    else
+        return [b[1], a[2]]
+    end
+end
+# warm up
+merge_these_two_intervals([1,2],[0,1])
+
+
+"""
+    merge_intervals(intervals::Vector{Vector{Int}})::Vector{Vector{Int}}
+
+TBW
+"""
+function merge_intervals(intervals::Vector{Vector{Int}})::Vector{Vector{Int}}
+    merged_intervals = copy(intervals)
+    
+    for i in eachindex(merged_intervals)
+        for j in (i+1):(length(merged_intervals))
+            if intervals_intersect(merged_intervals[i], merged_intervals[j])
+                if debug
+                    println("Intervals intersect: $(merged_intervals[i]), $(merged_intervals[j])")
+                end
+                merged_intervals[i] = merge_these_two_intervals(merged_intervals[i], merged_intervals[j])
+                merged_intervals[j] = []
+            end
+        end
+    end
+
+    return [x for x in merged_intervals if x != []]
+end
+# warm up
+merge_intervals([[1,2], [2,3]])
+
+
+filename = "twashington/intervals.txt"
+intervals_list = get_intervals(filename)
+for intervals in intervals_list
+    
+    elapsed_time = @elapsed merged_intervals = merge_intervals(intervals)
+    elapsed_ms = round(elapsed_time * 1000, sigdigits=3)
+    println("The merged intervals of $intervals is: $merged_intervals.  Took $elapsed_ms ms.")
+end

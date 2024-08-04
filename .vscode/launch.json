@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "julia",
+            "request": "launch",
+            "name": "Launch Program Julia",
+            "program": "${workspaceFolder}/twashington/merge.julia",
+            "stopOnEntry": false
+        },
+        {
             "type": "ghc",
             "request": "launch",
             "name": "haskell(stack)",

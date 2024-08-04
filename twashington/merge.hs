@@ -6,14 +6,14 @@ import System.IO
 import Text.Read (readMaybe)
 import Data.Maybe (fromMaybe)
 
--- Define a type for intervals
 type Interval = [Int]
 
--- Function to parse a list of intervals from a string
+intervalsCoincide :: Interval -> Interval -> Bool
+intervalsCoincide a b = not ((a !! 0 > b !! 1) || (b !! 0 > a !! 1))
+
 parseIntervals :: String -> Maybe [Interval]
 parseIntervals s = readMaybe s :: Maybe [Interval]
 
--- Function to read intervals from a file
 readIntervals :: FilePath -> IO [Interval]
 readIntervals filePath = do
     contents <- readFile filePath
@@ -22,16 +22,16 @@ readIntervals filePath = do
 
 main :: IO ()
 main = do
-  let filePath = "twashington/intervals.txt"
-  intervals <- readIntervals(filePath)
-  print intervals
+    let filePath = "twashington/intervals.txt"
+    intervals <- readIntervals(filePath)
+    print intervals
 
-  print $ parseIntervals "[[1,2]]"
+    print $ parseIntervals "[[1,2]]"
 
-  print $ missingNumber nums1
-  print $ missingNumber nums2
-  print $ missingNumber nums3
-  print $ missingNumber nums4
+    print $ missingNumber nums1
+    print $ missingNumber nums2
+    print $ missingNumber nums3
+    print $ missingNumber nums4
   
 nums1 = [3, 7, 1, 2, 8, 4, 5]
 nums2 = [11, 2, 10, 4, 5, 6, 7, 8, 1, 9]
