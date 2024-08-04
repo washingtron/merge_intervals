@@ -8,7 +8,8 @@
             "type": "julia",
             "request": "launch",
             "name": "Launch Program Julia",
-            "program": "${workspaceFolder}/twashington/merge.julia",
+            "program": "merge.jl",
+            "cwd": "${workspaceFolder}/twashington",
             "stopOnEntry": false
         },
         {

@@ -61,7 +61,7 @@ end
 merge_intervals([[1, 2], [9, 10], [-100, -50], [2, 2], [-6, 0], [3, 4], [20, 30]])
 
 
-filename = "twashington/intervals.txt"
+filename = "intervals.txt"
 intervals_list = get_intervals(filename)
 # intervals_list = [intervals_list[1]]
 for intervals in intervals_list
