@@ -1,6 +1,7 @@
 """
     T Washington
     Merge Intervals
+    Do not score this. Score the julia program.
 """
 
 

@@ -1,4 +1,6 @@
 -------------------------
+-- note: nonfunctional
+-- DO NOT USE
 -- runs with "haskell(stack)" debug profile --
 -------------------------
 

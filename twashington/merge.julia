@@ -1,11 +1,8 @@
 #=
   T Washington
   Merged Intervals Julia
+  Score this program, not the python one.
 =#
-
-using JSON
-# Note -- requires running this in Julia:
-#   import Pkg; Pkg.add("JSON")
 
 debug = false
 
@@ -13,8 +10,10 @@ function get_intervals(filename::String)::Vector{Vector{Vector{Int}}}
     intervals_list = Vector{Vector{Vector{Int}}}()
     open(filename, "r") do file
         for line in eachline(file)
-            # Parse the line as a JSON object to get the list of intervals
-            intervals = JSON.parse(line)
+            stripped_line = replace(strip(line, ['[', ']']), " " => "")
+            interval_strings = split(stripped_line, "],[")
+            intervals = [parse.(Int, split(interval_str, ',')) for interval_str in interval_strings]
+            
             push!(intervals_list, intervals)
         end
     end
