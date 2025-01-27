@@ -54,7 +54,12 @@ def left(input_list, i):
         return []
 
 
-def spiralify(input_list):
+def broken_spiralify(input_list):
+    """
+    Do not use. this one broken.
+    :param input_list:
+    :return:
+    """
     y = len(input_list)
     x = len(input_list[0])
     i = 0
@@ -68,26 +73,26 @@ def spiralify(input_list):
     return output  # [b for item in output for b in item]
 
 
-def spiralify2(raw):
-    x0, x1, y0, y1 = 0, len(raw[0]) - 1, 0, len(raw) - 1
+def spiral(input_matrix):
+    x0, x1, y0, y1 = 0, len(input_matrix[0]) - 1, 0, len(input_matrix) - 1
     output = []
     while x0 <= x1 and y0 <= y1:
         if x0 == x1:
-            output.append([raw[a][x0] for a in range(y0, y1 + 1)])
+            output.append([input_matrix[a][x0] for a in range(y0, y1 + 1)])
         elif x0 + 1 == x1:
             output.append(
-                [raw[y0][x0]] + [raw[a][x1] for a in range(y0, y1 + 1)] + [raw[a][x0] for a in
-                                                                           range(y1, y0, -1)])
+                [input_matrix[y0][x0]] + [input_matrix[a][x1] for a in range(y0, y1 + 1)] + [input_matrix[a][x0] for a in
+                                                                                             range(y1, y0, -1)])
         elif y0 == y1:
-            output.append([raw[y0][a] for a in range(x0, x1 + 1)])
+            output.append([input_matrix[y0][a] for a in range(x0, x1 + 1)])
         elif y0 + 1 == y1:
             output.append(
-                [raw[y0][a] for a in range(x0, x1 + 1)] + [raw[y1][a] for a in range(x1, x0 - 1, -1)])
+                [input_matrix[y0][a] for a in range(x0, x1 + 1)] + [input_matrix[y1][a] for a in range(x1, x0 - 1, -1)])
         else:
-            output.append([raw[y0][a] for a in range(x0, x1 + 1)])
-            output.append([raw[a][x1] for a in range(y0 + 1, y1 + 1)])
-            output.append([raw[y1][a] for a in range(x1 - 1, x0 - 1, -1)])
-            output.append([raw[a][x0] for a in range(y1 - 1, y0, -1)])
+            output.append([input_matrix[y0][a] for a in range(x0, x1 + 1)])
+            output.append([input_matrix[a][x1] for a in range(y0 + 1, y1 + 1)])
+            output.append([input_matrix[y1][a] for a in range(x1 - 1, x0 - 1, -1)])
+            output.append([input_matrix[a][x0] for a in range(y1 - 1, y0, -1)])
         x0 = x0 + 1
         x1 = x1 - 1
         y0 = y0 + 1
@@ -95,19 +100,34 @@ def spiralify2(raw):
     return [b for item in output for b in item]  # output
 
 
-def main():
+def run_testing_code():
     input_matrix_list = generate_input()
 
     start = time.perf_counter_ns()
     for input_list in input_matrix_list[2:]:
-        output_list = spiralify2(input_list)
+        output_list = spiral(input_list)
         end = time.perf_counter_ns()
         print(f"Input: {input_list}, output: {output_list}")
         if len(output_list) != len([b for item in input_list for b in item]):
             print(f'Error, input and output lists have different number of elements')
         if len(set(output_list)) != len(output_list):
-            print(f'Error, output list values are not unique. len(set(output_list)) ={len(set(output_list))}, len(output_list) = {len(output_list)}')
+            print(
+                f'Error, output list values are not unique. len(set(output_list)) ={len(set(output_list))}, len(output_list) = {len(output_list)}')
     print(f"Time taken: {(end - start):.4f} ns")
+
+
+def main():
+    # set to true to do development work / debugging
+    debug = False
+
+    if debug:
+        run_testing_code()
+
+    # Please include an input variable matrix (like in the examples) in your code to allow for testing your code.
+    # Print out the result to the console/stdout.
+    matrix = [[1, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16]]
+    print(spiral(matrix))
+
 
 
 def generate_input():
