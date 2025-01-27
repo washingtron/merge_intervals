@@ -60,7 +60,7 @@ def spiralify(input_list):
     x = len(input_list[0])
     i = 0
     output = []
-    while i <= int(y/2) or i <= int(x/2):
+    while i <= int(y / 2) or i <= int(x / 2):
         output.append(top(input_list, i))
         output.append(right(input_list, i))
         output.append(bottom(input_list, i))
@@ -69,11 +69,38 @@ def spiralify(input_list):
     return output  # [b for item in output for b in item]
 
 
+def spiralify2(raw):
+    x0, x1, y0, y1 = 0, len(raw[0]), 0, len(raw)
+    output = []
+    while x0 < x1 and y0 < y1:
+        if x0 == x1:
+            output.append([raw[x0, a] for a in range(y0, y1 + 1)])
+        elif x0 + 1 == x1:
+            output.append(
+                [raw[x0, y0]] + [raw[x1, a] for a in range(y0, y1 + 1)] + [raw[x0, a] for a in
+                                                                           range(y1, y0 - 1, -1)])
+        elif y0 == y1:
+            output.append([raw[a, y0] for a in range(x0, x1 + 1)])
+        elif y0 + 1 == y1:
+            output.append(
+                [raw[a, y0] for a in range(x0, x1 + 1)] + [raw[a, y1] for a in range(x1, x0 - 1, -1)])
+        else:
+            output.append([raw[a, y0] for a in range(x0, x1 + 1)])
+            output.append([raw[x1, a] for a in range(y0, y1 + 1)])
+            output.append([raw[a, y1] for a in range(y1, y0 - 1, -1)])
+            output.append([raw[x0, a] for a in range(x1, x0 - 1, -1)])
+        x0 = x0 + 1
+        x1 = x1 - 1
+        y0 = y0 + 1
+        y1 = y1 - 1
+    return output
+
+
 def main():
     input_matrix_list = get_input_list("matrix_input.txt")
     start = time.perf_counter_ns()
-    for input_list in input_matrix_list:
-        output_list = spiralify(input_list)
+    for input_list in input_matrix_list[2:]:
+        output_list = spiralify2(input_list)
         end = time.perf_counter_ns()
         print(f"Input: {input_list}, output: {output_list}")
     print(f"Time taken: {(end - start):.4f} ns")
