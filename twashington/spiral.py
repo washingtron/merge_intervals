@@ -1,6 +1,13 @@
 """
     T Washington
     Spirals
+
+    Function:
+    spiral(input_matrix)
+
+    Given an m x n matrix, return all elements of the matrix in spiral order.
+
+    LEET code link https://leetcode.com/problems/spiral-matrix/description/
 """
 import time
 
@@ -73,26 +80,31 @@ def broken_spiralify(input_list):
     return output  # [b for item in output for b in item]
 
 
-def spiral(input_matrix):
-    x0, x1, y0, y1 = 0, len(input_matrix[0]) - 1, 0, len(input_matrix) - 1
+def spiral(matrix):
+    """
+    This one is the one that works. Well, one hopes.
+    :param matrix:
+    :return:
+    """
+    x0, x1, y0, y1 = 0, len(matrix[0]) - 1, 0, len(matrix) - 1
     output = []
     while x0 <= x1 and y0 <= y1:
         if x0 == x1:
-            output.append([input_matrix[a][x0] for a in range(y0, y1 + 1)])
+            output.append([matrix[a][x0] for a in range(y0, y1 + 1)])
         elif x0 + 1 == x1:
             output.append(
-                [input_matrix[y0][x0]] + [input_matrix[a][x1] for a in range(y0, y1 + 1)] + [input_matrix[a][x0] for a in
-                                                                                             range(y1, y0, -1)])
+                [matrix[y0][x0]] + [matrix[a][x1] for a in range(y0, y1 + 1)] + [matrix[a][x0] for a in
+                                                                                 range(y1, y0, -1)])
         elif y0 == y1:
-            output.append([input_matrix[y0][a] for a in range(x0, x1 + 1)])
+            output.append([matrix[y0][a] for a in range(x0, x1 + 1)])
         elif y0 + 1 == y1:
             output.append(
-                [input_matrix[y0][a] for a in range(x0, x1 + 1)] + [input_matrix[y1][a] for a in range(x1, x0 - 1, -1)])
+                [matrix[y0][a] for a in range(x0, x1 + 1)] + [matrix[y1][a] for a in range(x1, x0 - 1, -1)])
         else:
-            output.append([input_matrix[y0][a] for a in range(x0, x1 + 1)])
-            output.append([input_matrix[a][x1] for a in range(y0 + 1, y1 + 1)])
-            output.append([input_matrix[y1][a] for a in range(x1 - 1, x0 - 1, -1)])
-            output.append([input_matrix[a][x0] for a in range(y1 - 1, y0, -1)])
+            output.append([matrix[y0][a] for a in range(x0, x1 + 1)])
+            output.append([matrix[a][x1] for a in range(y0 + 1, y1 + 1)])
+            output.append([matrix[y1][a] for a in range(x1 - 1, x0 - 1, -1)])
+            output.append([matrix[a][x0] for a in range(y1 - 1, y0, -1)])
         x0 = x0 + 1
         x1 = x1 - 1
         y0 = y0 + 1
