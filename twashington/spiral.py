@@ -96,10 +96,8 @@ def spiralify2(raw):
 
 
 def main():
-    input_matrix_list = get_input_list("matrix_input.txt")
-    input_matrix_list.append([[i * 26 + j + 1 for j in range(26)] for i in range(23)])
-    input_matrix_list.append([[i * 35 + j + 1 for j in range(35)] for i in range(23)])
-    input_matrix_list.append([[i * 35 + j + 1 for j in range(35)] for i in range(44)])
+    input_matrix_list = generate_input()
+
     start = time.perf_counter_ns()
     for input_list in input_matrix_list[2:]:
         output_list = spiralify2(input_list)
@@ -110,6 +108,73 @@ def main():
         if len(set(output_list)) != len(output_list):
             print(f'Error, output list values are not unique. len(set(output_list)) ={len(set(output_list))}, len(output_list) = {len(output_list)}')
     print(f"Time taken: {(end - start):.4f} ns")
+
+
+def generate_input():
+    input_matrix_list = get_input_list("matrix_input.txt")
+    # 1 x M
+    input_matrix_list.append(generate_integer_matrix(1, 1))
+    input_matrix_list.append(generate_integer_matrix(1, 2))
+    input_matrix_list.append(generate_integer_matrix(1, 5))
+    input_matrix_list.append(generate_integer_matrix(1, 13))
+    # N x 1
+    input_matrix_list.append(generate_integer_matrix(2, 1))
+    input_matrix_list.append(generate_integer_matrix(3, 1))
+    input_matrix_list.append(generate_integer_matrix(4, 1))
+    input_matrix_list.append(generate_integer_matrix(8, 1))
+    input_matrix_list.append(generate_integer_matrix(12, 1))
+    # 2 x M
+    input_matrix_list.append(generate_integer_matrix(2, 2))
+    input_matrix_list.append(generate_integer_matrix(2, 5))
+    input_matrix_list.append(generate_integer_matrix(2, 8))
+    input_matrix_list.append(generate_integer_matrix(2, 13))
+    # N x 2
+    input_matrix_list.append(generate_integer_matrix(2, 2))
+    input_matrix_list.append(generate_integer_matrix(3, 2))
+    input_matrix_list.append(generate_integer_matrix(4, 2))
+    input_matrix_list.append(generate_integer_matrix(8, 2))
+    input_matrix_list.append(generate_integer_matrix(12, 2))
+    # 3 x M
+    input_matrix_list.append(generate_integer_matrix(3, 3))
+    input_matrix_list.append(generate_integer_matrix(3, 4))
+    input_matrix_list.append(generate_integer_matrix(3, 7))
+    input_matrix_list.append(generate_integer_matrix(3, 12))
+    # N x 3
+    input_matrix_list.append(generate_integer_matrix(2, 3))
+    input_matrix_list.append(generate_integer_matrix(3, 3))
+    input_matrix_list.append(generate_integer_matrix(4, 3))
+    input_matrix_list.append(generate_integer_matrix(8, 3))
+    input_matrix_list.append(generate_integer_matrix(12, 3))
+    # Various larger matrices
+    input_matrix_list.append(generate_integer_matrix(7, 7))
+    input_matrix_list.append(generate_integer_matrix(7, 8))
+    input_matrix_list.append(generate_integer_matrix(7, 9))
+    input_matrix_list.append(generate_integer_matrix(8, 7))
+    input_matrix_list.append(generate_integer_matrix(8, 8))
+    input_matrix_list.append(generate_integer_matrix(8, 9))
+    input_matrix_list.append(generate_integer_matrix(9, 7))
+    input_matrix_list.append(generate_integer_matrix(9, 8))
+    input_matrix_list.append(generate_integer_matrix(9, 9))
+    input_matrix_list.append(generate_integer_matrix(23, 26))
+    input_matrix_list.append(generate_integer_matrix(35, 25))
+    input_matrix_list.append(generate_integer_matrix(35, 24))
+    input_matrix_list.append(generate_integer_matrix(35, 23))
+    input_matrix_list.append(generate_integer_matrix(35, 44))
+    input_matrix_list.append(generate_integer_matrix(35, 45))
+    input_matrix_list.append(generate_integer_matrix(35, 46))
+    input_matrix_list.append(generate_integer_matrix(35, 47))
+    input_matrix_list.append(generate_integer_matrix(36, 24))
+    input_matrix_list.append(generate_integer_matrix(36, 25))
+    input_matrix_list.append(generate_integer_matrix(36, 23))
+    input_matrix_list.append(generate_integer_matrix(36, 44))
+    input_matrix_list.append(generate_integer_matrix(36, 45))
+    input_matrix_list.append(generate_integer_matrix(36, 46))
+    input_matrix_list.append(generate_integer_matrix(36, 47))
+    return input_matrix_list
+
+
+def generate_integer_matrix(x, y):
+    return [[i * x + j + 1 for j in range(x)] for i in range(y)]
 
 
 if __name__ == "__main__":
