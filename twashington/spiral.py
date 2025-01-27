@@ -58,12 +58,12 @@ def spiralify(input_list):
 
 def main():
     input_matrix_list = get_input_list("matrix_input.txt")
+    start = time.perf_counter_ns()
     for input_list in input_matrix_list:
-        start = time.perf_counter_ns()
         output_list = spiralify(input_list)
         end = time.perf_counter_ns()
         print(f"Input: {input_list}, output: {output_list}")
-        print(f"Time taken: {(end - start):.4f} ns")
+    print(f"Time taken: {(end - start):.4f} ns")
 
 
 if __name__ == "__main__":
