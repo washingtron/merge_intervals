@@ -10,9 +10,8 @@ def get_input_list(filename):
 
     with open(filename, 'r') as file:
         for line in file:
-            # Strip whitespace and newlines, and evaluate the string as a Python expression
             stripped_line = line.strip()
-            if stripped_line:  # Check if line is not empty
+            if stripped_line:
                 matrix = eval(stripped_line)
                 matrix_list.append(matrix)
 
