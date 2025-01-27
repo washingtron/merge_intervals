@@ -130,7 +130,7 @@ def run_testing_code():
 
 def main():
     # set to true to do development work / debugging
-    debug = False
+    debug = True
 
     if debug:
         run_testing_code()
@@ -141,9 +141,9 @@ def main():
     print(spiral(matrix))
 
 
-
 def generate_input():
-    input_matrix_list = get_input_list("matrix_input.txt")
+    input_matrix_list = []
+    # input_matrix_list = get_input_list("matrix_input.txt")
     # 1 x M
     input_matrix_list.append(generate_integer_matrix(1, 1))
     input_matrix_list.append(generate_integer_matrix(1, 2))
