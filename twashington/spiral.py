@@ -22,8 +22,8 @@ def get_input_list(filename):
 def top(input_list, i):
     y = len(input_list)
     x = len(input_list[0])
-    if i * 2 > y:
-        return input_list[i][i:(-1 * i)]
+    if 2 * i <= y and 2 * i < x:
+        return input_list[i][i:(x - i - 1)]
     else:
         return []
 
@@ -31,19 +31,28 @@ def top(input_list, i):
 def right(input_list, i):
     y = len(input_list)
     x = len(input_list[0])
-    return [a for a in range()]
+    if 2 * i <= x and 2 * i < y:
+        return [input_list[a][x - i - 1] for a in range(i, y - i - 1)]
+    else:
+        return []
 
 
 def bottom(input_list, i):
     y = len(input_list)
     x = len(input_list[0])
-    pass
+    if 2 * i + 1 < y and 2 * i < x:
+        return input_list[y - 1 - i][(x - i + 1):i:-1]
+    else:
+        return []
 
 
 def left(input_list, i):
     y = len(input_list)
     x = len(input_list[0])
-    pass
+    if 2 * i + 1 < x and 2 * i < y:
+        return [input_list[a][i] for a in range(y - i - 1, i, -1)]
+    else:
+        return []
 
 
 def spiralify(input_list):
@@ -51,9 +60,13 @@ def spiralify(input_list):
     x = len(input_list[0])
     i = 0
     output = []
-    while i < int(y/2) and i < int(x/2):
-        output.append(top(input_list, i), right(input_list, i), bottom(input_list, i), left(input_list, i))
+    while i <= int(y/2) or i <= int(x/2):
+        output.append(top(input_list, i))
+        output.append(right(input_list, i))
+        output.append(bottom(input_list, i))
+        output.append(left(input_list, i))
         i = i + 1
+    return output  # [b for item in output for b in item]
 
 
 def main():
